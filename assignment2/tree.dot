@@ -1,0 +1,117 @@
+digraph {
+n0 [label="GOAL line : 1"];
+n1 [label="MAIN_CLASS_DECLARATION line : 1"];
+n2 [label="Identifier:Factorial line : 1"];
+n1 -> n2
+n3 [label="CLASS_BODY line : 3"];
+n4 [label="METHOD_DECLARATION line : 2"];
+n5 [label="RETURN_TYPE line : 2"];
+n6 [label="TYPE_VOID line : 2"];
+n5 -> n6
+n4 -> n5
+n7 [label="Identifier:main line : 2"];
+n4 -> n7
+n8 [label="PARAMETER_LIST line : 2"];
+n9 [label="PARAMETER line : 2"];
+n10 [label="TYPE_STRING[] line : 2"];
+n9 -> n10
+n11 [label="Identifier:a line : 2"];
+n9 -> n11
+n8 -> n9
+n4 -> n8
+n12 [label="METHOD_BODY line : 3"];
+n13 [label="STATEMENT:STATEMENT_GROUP line : 3"];
+n14 [label="STATEMENT:PRINT line : 3"];
+n15 [label="EXPRESSION:CALL_FUNCTION line : 3"];
+n16 [label="EXPRESSION:NEW_CLASS_OBJECT line : 3"];
+n17 [label="Identifier:Fac line : 3"];
+n16 -> n17
+n15 -> n16
+n18 [label="EXPRESSION:CALL_METHOD line : 3"];
+n19 [label="Identifier:ComputeFac line : 3"];
+n18 -> n19
+n15 -> n18
+n20 [label="EXPRESSION_PARAMETER line : 3"];
+n21 [label="Integer_Literal:10 line : 3"];
+n20 -> n21
+n15 -> n20
+n14 -> n15
+n13 -> n14
+n12 -> n13
+n4 -> n12
+n3 -> n4
+n1 -> n3
+n0 -> n1
+n22 [label="CLASS_DECLARATION line : 7"];
+n23 [label="Identifier:Fac line : 7"];
+n22 -> n23
+n24 [label="CLASS_BODY line : 9"];
+n25 [label="METHOD_DECLARATION line : 9"];
+n26 [label="RETURN_TYPE line : 9"];
+n27 [label="TYPE_INT line : 9"];
+n26 -> n27
+n25 -> n26
+n28 [label="Identifier:ComputeFac line : 9"];
+n25 -> n28
+n29 [label="PARAMETER_LIST line : 9"];
+n30 [label="PARAMETER line : 9"];
+n31 [label="TYPE_INT line : 9"];
+n30 -> n31
+n32 [label="Identifier:num line : 9"];
+n30 -> n32
+n29 -> n30
+n25 -> n29
+n33 [label="METHOD_BODY line : 10"];
+n34 [label="VAR_DECLARATION line : 10"];
+n35 [label="TYPE_INT line : 10"];
+n34 -> n35
+n36 [label="Identifier:num_aux line : 10"];
+n34 -> n36
+n33 -> n34
+n37 [label="STATEMENT:IF_ELSE line : 11"];
+n38 [label="EXPRESSION:< line : 11"];
+n39 [label="Identifier:num line : 11"];
+n38 -> n39
+n40 [label="Integer_Literal:1 line : 11"];
+n38 -> n40
+n37 -> n38
+n41 [label="STATEMENT:ASSIGN line : 12"];
+n42 [label="Identifier:num_aux line : 12"];
+n41 -> n42
+n43 [label="Integer_Literal:1 line : 12"];
+n41 -> n43
+n37 -> n41
+n44 [label="STATEMENT:ASSIGN line : 14"];
+n45 [label="Identifier:num_aux line : 14"];
+n44 -> n45
+n46 [label="EXPRESSION:* line : 14"];
+n47 [label="Identifier:num line : 14"];
+n46 -> n47
+n48 [label="EXPRESSION:CALL_FUNCTION line : 14"];
+n49 [label="EXPRESSION:THIS line : 14"];
+n48 -> n49
+n50 [label="EXPRESSION:CALL_METHOD line : 14"];
+n51 [label="Identifier:ComputeFac line : 14"];
+n50 -> n51
+n48 -> n50
+n52 [label="EXPRESSION_PARAMETER line : 14"];
+n53 [label="EXPRESSION:- line : 14"];
+n54 [label="Identifier:num line : 14"];
+n53 -> n54
+n55 [label="Integer_Literal:1 line : 14"];
+n53 -> n55
+n52 -> n53
+n48 -> n52
+n46 -> n48
+n44 -> n46
+n37 -> n44
+n33 -> n37
+n25 -> n33
+n56 [label="RETURN line : 9"];
+n57 [label="Identifier:num_aux line : 15"];
+n56 -> n57
+n25 -> n56
+n24 -> n25
+n22 -> n24
+n0 -> n22
+}

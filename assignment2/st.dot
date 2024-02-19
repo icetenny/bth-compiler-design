@@ -1,0 +1,30 @@
+digraph {
+n0 [label="goal:goal_name
+ -----------------------------------
+name: Fac; record: CLASS; return_type: Fac
+name: Factorial; record: CLASS; return_type: Factorial
+"];
+n1 [label="CLASS:Factorial
+ -----------------------------------
+name: main; record: METHOD; return_type: TYPE_VOID
+name: this; record: VARIABLE; return_type: Factorial
+"];
+n2 [label="METHOD:main
+ -----------------------------------
+name: a; record: VARIABLE; return_type: TYPE_STRING[]
+"];
+n1 -> n2
+n0 -> n1
+n3 [label="CLASS:Fac
+ -----------------------------------
+name: ComputeFac; record: METHOD; return_type: TYPE_INT
+name: this; record: VARIABLE; return_type: Fac
+"];
+n4 [label="METHOD:ComputeFac
+ -----------------------------------
+name: num; record: VARIABLE; return_type: TYPE_INT
+name: num_aux; record: VARIABLE; return_type: TYPE_INT
+"];
+n3 -> n4
+n0 -> n3
+}

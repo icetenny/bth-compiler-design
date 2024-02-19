@@ -1,0 +1,243 @@
+digraph {
+n0 [label="GOAL"];
+n1 [label="MAIN_CLASS"];
+n2 [label="Identifier:OperatorPriority"];
+n1 -> n2
+n3 [label="MAIN_CLASS_METHOD"];
+n4 [label="Identifier:a"];
+n3 -> n4
+n5 [label="STATEMENT_GROUP"];
+n6 [label="PRINT"];
+n7 [label="NEW_IDENTIFIER"];
+n8 [label="Identifier:OP"];
+n7 -> n8
+n9 [label="Identifier:arithmetic"];
+n7 -> n9
+n6 -> n7
+n5 -> n6
+n3 -> n5
+n1 -> n3
+n0 -> n1
+n10 [label="CLASS_DECLARATION"];
+n11 [label="Identifier:OP"];
+n10 -> n11
+n12 [label="CLASS_BODY"];
+n13 [label="METHOD_DECLARATION"];
+n14 [label="RETURN_TYPE"];
+n15 [label="TYPE_INT"];
+n14 -> n15
+n13 -> n14
+n16 [label="Identifier:arithmetic"];
+n13 -> n16
+n17 [label="METHOD_BODY"];
+n18 [label="VAR_DECLARATION"];
+n19 [label="TYPE_INT"];
+n18 -> n19
+n20 [label="Identifier:b"];
+n18 -> n20
+n17 -> n18
+n21 [label="ASSIGN"];
+n22 [label="Identifier:b"];
+n21 -> n22
+n23 [label="Integer_Literal:4"];
+n21 -> n23
+n17 -> n21
+n24 [label="VAR_DECLARATION"];
+n25 [label="TYPE_INT"];
+n24 -> n25
+n26 [label="Identifier:c"];
+n24 -> n26
+n17 -> n24
+n27 [label="ASSIGN"];
+n28 [label="Identifier:c"];
+n27 -> n28
+n29 [label="Integer_Literal:8"];
+n27 -> n29
+n17 -> n27
+n30 [label="VAR_DECLARATION"];
+n31 [label="TYPE_INT"];
+n30 -> n31
+n32 [label="Identifier:ret"];
+n30 -> n32
+n17 -> n30
+n33 [label="ASSIGN"];
+n34 [label="Identifier:ret"];
+n33 -> n34
+n35 [label="+"];
+n36 [label="-"];
+n37 [label="+"];
+n38 [label="Integer_Literal:1"];
+n37 -> n38
+n39 [label="/"];
+n40 [label="Integer_Literal:18"];
+n39 -> n40
+n41 [label="Integer_Literal:3"];
+n39 -> n41
+n37 -> n39
+n36 -> n37
+n42 [label="Identifier:b"];
+n36 -> n42
+n35 -> n36
+n43 [label="*"];
+n44 [label="Identifier:c"];
+n43 -> n44
+n45 [label="Integer_Literal:9"];
+n43 -> n45
+n35 -> n43
+n33 -> n35
+n17 -> n33
+n46 [label="ASSIGN"];
+n47 [label="Identifier:ret"];
+n46 -> n47
+n48 [label="+"];
+n49 [label="-"];
+n50 [label="+"];
+n51 [label="Integer_Literal:1"];
+n50 -> n51
+n52 [label="/"];
+n53 [label="Integer_Literal:18"];
+n52 -> n53
+n54 [label="Integer_Literal:3"];
+n52 -> n54
+n50 -> n52
+n49 -> n50
+n55 [label="Identifier:b"];
+n49 -> n55
+n48 -> n49
+n56 [label="*"];
+n57 [label="Identifier:c"];
+n56 -> n57
+n58 [label="Integer_Literal:9"];
+n56 -> n58
+n48 -> n56
+n46 -> n48
+n17 -> n46
+n13 -> n17
+n59 [label="RETURN"];
+n60 [label="Identifier:ret"];
+n59 -> n60
+n13 -> n59
+n12 -> n13
+n61 [label="METHOD_DECLARATION"];
+n62 [label="RETURN_TYPE"];
+n63 [label="TYPE_BOOLEAN"];
+n62 -> n63
+n61 -> n62
+n64 [label="Identifier:relational"];
+n61 -> n64
+n65 [label="METHOD_BODY"];
+n66 [label="VAR_DECLARATION"];
+n67 [label="TYPE_INT"];
+n66 -> n67
+n68 [label="Identifier:a"];
+n66 -> n68
+n65 -> n66
+n69 [label="VAR_DECLARATION"];
+n70 [label="TYPE_INT"];
+n69 -> n70
+n71 [label="Identifier:b"];
+n69 -> n71
+n65 -> n69
+n72 [label="VAR_DECLARATION"];
+n73 [label="TYPE_BOOLEAN"];
+n72 -> n73
+n74 [label="Identifier:c"];
+n72 -> n74
+n65 -> n72
+n75 [label="VAR_DECLARATION"];
+n76 [label="TYPE_BOOLEAN"];
+n75 -> n76
+n77 [label="Identifier:d"];
+n75 -> n77
+n65 -> n75
+n78 [label="ASSIGN"];
+n79 [label="Identifier:a"];
+n78 -> n79
+n80 [label="Integer_Literal:10"];
+n78 -> n80
+n65 -> n78
+n81 [label="ASSIGN"];
+n82 [label="Identifier:b"];
+n81 -> n82
+n83 [label="Integer_Literal:12"];
+n81 -> n83
+n65 -> n81
+n84 [label="ASSIGN"];
+n85 [label="Identifier:d"];
+n84 -> n85
+n86 [label="FALSE"];
+n84 -> n86
+n65 -> n84
+n87 [label="ASSIGN"];
+n88 [label="Identifier:c"];
+n87 -> n88
+n89 [label="TRUE"];
+n87 -> n89
+n65 -> n87
+n90 [label="VAR_DECLARATION"];
+n91 [label="TYPE_BOOLEAN"];
+n90 -> n91
+n92 [label="Identifier:ret"];
+n90 -> n92
+n65 -> n90
+n93 [label="ASSIGN"];
+n94 [label="Identifier:ret"];
+n93 -> n94
+n95 [label="OR"];
+n96 [label="AND"];
+n97 [label="<"];
+n98 [label="Identifier:a"];
+n97 -> n98
+n99 [label="Identifier:b"];
+n97 -> n99
+n96 -> n97
+n100 [label="NOT"];
+n101 [label="Identifier:d"];
+n100 -> n101
+n96 -> n100
+n95 -> n96
+n102 [label="=="];
+n103 [label="Identifier:d"];
+n102 -> n103
+n104 [label="NOT"];
+n105 [label="Identifier:c"];
+n104 -> n105
+n102 -> n104
+n95 -> n102
+n93 -> n95
+n65 -> n93
+n106 [label="ASSIGN"];
+n107 [label="Identifier:ret"];
+n106 -> n107
+n108 [label="OR"];
+n109 [label="AND"];
+n110 [label="<"];
+n111 [label="Identifier:a"];
+n110 -> n111
+n112 [label="Identifier:b"];
+n110 -> n112
+n109 -> n110
+n113 [label="NOT"];
+n114 [label="Identifier:d"];
+n113 -> n114
+n109 -> n113
+n108 -> n109
+n115 [label="=="];
+n116 [label="Identifier:d"];
+n115 -> n116
+n117 [label="NOT"];
+n118 [label="Identifier:c"];
+n117 -> n118
+n115 -> n117
+n108 -> n115
+n106 -> n108
+n65 -> n106
+n61 -> n65
+n119 [label="RETURN"];
+n120 [label="Identifier:ret"];
+n119 -> n120
+n61 -> n119
+n12 -> n61
+n10 -> n12
+n0 -> n10
+}
