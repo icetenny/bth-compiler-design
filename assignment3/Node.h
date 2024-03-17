@@ -218,7 +218,7 @@ public:
 
 	Scope(int id, Record *r) : scope_id(id), scope_type(r->recordtype), scope_name(r->name), scope_return_type(r->returntype)
 	{
-		cout << "New Scope from record : " << scope_type << " : " << scope_name << endl;
+		// cout << "New Scope from record : " << scope_type << " : " << scope_name << endl;
 	}
 
 	Scope(int id)
@@ -278,7 +278,7 @@ public:
 			variable_record_map[v->name] = v;
 		}
 
-		cout << "Record added : " << re->name << " : " << re->recordtype << endl;
+		// cout << "Record added : " << re->name << " : " << re->recordtype << endl;
 	}
 
 	void test_print()
@@ -475,9 +475,8 @@ public:
 		current_class_record->set_type((*iter)->value);
 		current_class_record->set_name((*iter)->value);
 
-		cout << "Exe class" << endl;
-
-		current_scope->test_print();
+		// cout << "Exe class" << endl;
+		// current_scope->test_print();
 
 		add_record_to_scope(current_class_record);
 
@@ -502,9 +501,8 @@ public:
 		// Add method record to current class record
 		current_class_record->method_map[current_method_record->name] = current_method_record;
 
-		cout << "Exe method" << endl;
-
-		current_scope->test_print();
+		// cout << "Exe method" << endl;
+		// current_scope->test_print();
 
 		add_record_to_scope(current_method_record);
 
@@ -520,7 +518,7 @@ public:
 			current_method_record->param_count++;
 		}
 
-		current_method_record->print_param_list();
+		// current_method_record->print_param_list();
 	}
 
 	void execute_var_declaration(auto iter)
@@ -568,13 +566,13 @@ public:
 	void enter_scope(int index = -1)
 	{
 		current_scope = current_scope->get_child(index);
-		cout << "Entering scope, now in: " << current_scope->scope_name << " : " << current_scope->scope_type << endl;
+		// cout << "Entering scope, now in: " << current_scope->scope_name << " : " << current_scope->scope_type << endl;
 	}
 
 	void exit_scope()
 	{
 		current_scope = current_scope->parent_scope;
-		cout << "Exiting scope, now in: " << current_scope->scope_name << " : " << current_scope->scope_type << endl;
+		// cout << "Exiting scope, now in: " << current_scope->scope_name << " : " << current_scope->scope_type << endl;
 	}
 
 	void semantic_traversal(Node *root_node)
@@ -680,7 +678,8 @@ public:
 
 		lineno = save_return_line;
 
-		cout << return_type << current_scope->scope_return_type << endl;
+		// cout << return_type << current_scope->scope_return_type << endl;
+
 		if (return_type != current_scope->scope_return_type)
 		{
 			sem_error("Unmatched Return Type");
@@ -867,7 +866,7 @@ public:
 
 		lineno = (*iter)->lineno;
 
-		cout << type << value << endl;
+		// cout << type << value << endl;
 
 		if (type == "Identifier")
 		{

@@ -1,7 +1,7 @@
 digraph {
 n0 [label="GOAL line : 1"];
 n1 [label="MAIN_CLASS_DECLARATION line : 1"];
-n2 [label="Identifier:C2 , line:1"];
+n2 [label="Identifier:D1 , line:1"];
 n1 -> n2
 n3 [label="CLASS_BODY line : 3"];
 n4 [label="METHOD_DECLARATION line : 2"];
@@ -82,61 +82,33 @@ n43 [label="Identifier:num , line:11"];
 n41 -> n43
 n40 -> n41
 n44 [label="STATEMENT:STATEMENT_GROUP , line:12"];
-n45 [label="STATEMENT:IF_ELSE , line:12"];
-n46 [label="EXPRESSION:AND , line:12"];
-n47 [label="EXPRESSION:< , line:12"];
-n48 [label="Integer_Literal:50 , line:12"];
+n45 [label="STATEMENT:ASSIGN , line:12"];
+n46 [label="Identifier:sum , line:12"];
+n45 -> n46
+n47 [label="EXPRESSION:+ , line:12"];
+n48 [label="Identifier:sum , line:12"];
 n47 -> n48
 n49 [label="Identifier:num , line:12"];
 n47 -> n49
-n46 -> n47
-n50 [label="EXPRESSION:< , line:12"];
-n51 [label="Identifier:sum , line:12"];
-n50 -> n51
-n52 [label="Integer_Literal:2000 , line:12"];
-n50 -> n52
-n46 -> n50
-n45 -> n46
-n53 [label="STATEMENT:STATEMENT_GROUP , line:13"];
-n54 [label="STATEMENT:PRINT , line:13"];
-n55 [label="Identifier:sum , line:13"];
-n54 -> n55
-n53 -> n54
-n45 -> n53
-n56 [label="STATEMENT:STATEMENT_GROUP , line:15"];
-n57 [label="STATEMENT:PRINT , line:15"];
-n58 [label="Identifier:num , line:15"];
-n57 -> n58
-n56 -> n57
-n45 -> n56
+n45 -> n47
 n44 -> n45
-n59 [label="STATEMENT:ASSIGN , line:17"];
-n60 [label="Identifier:sum , line:17"];
-n59 -> n60
-n61 [label="EXPRESSION:+ , line:17"];
-n62 [label="Identifier:sum , line:17"];
-n61 -> n62
-n63 [label="Identifier:num , line:17"];
-n61 -> n63
-n59 -> n61
-n44 -> n59
-n64 [label="STATEMENT:ASSIGN , line:18"];
-n65 [label="Identifier:num , line:18"];
-n64 -> n65
-n66 [label="EXPRESSION:- , line:18"];
-n67 [label="Identifier:num , line:18"];
-n66 -> n67
-n68 [label="Integer_Literal:1 , line:18"];
-n66 -> n68
-n64 -> n66
-n44 -> n64
+n50 [label="STATEMENT:ASSIGN , line:13"];
+n51 [label="Identifier:num , line:13"];
+n50 -> n51
+n52 [label="EXPRESSION:- , line:13"];
+n53 [label="Identifier:num , line:13"];
+n52 -> n53
+n54 [label="Integer_Literal:1 , line:13"];
+n52 -> n54
+n50 -> n52
+n44 -> n50
 n40 -> n44
 n33 -> n40
 n25 -> n33
-n69 [label="RETURN line : 8"];
-n70 [label="Identifier:sum , line:20"];
-n69 -> n70
-n25 -> n69
+n55 [label="RETURN line : 8"];
+n56 [label="Identifier:sum , line:15"];
+n55 -> n56
+n25 -> n55
 n24 -> n25
 n22 -> n24
 n0 -> n22

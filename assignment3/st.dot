@@ -1,13 +1,13 @@
 digraph {
 n0 [label="goal:goal_name
  -----------------------------------
-name: C2; record: CLASS; return_type: C2
+name: D1; record: CLASS; return_type: D1
 name: Sum; record: CLASS; return_type: Sum
 "];
-n1 [label="CLASS:C2
+n1 [label="CLASS:D1
  -----------------------------------
 name: main; record: METHOD; return_type: TYPE_VOID
-name: this; record: VARIABLE; return_type: C2
+name: this; record: VARIABLE; return_type: D1
 "];
 n2 [label="METHOD:main
  -----------------------------------

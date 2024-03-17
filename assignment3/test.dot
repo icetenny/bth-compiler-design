@@ -1,0 +1,18 @@
+digraph {
+graph [ splines = ortho ]
+node [ shape = box ];
+block_0 [ label = " block_0 \n ...\n " ];
+block_0 -> block_1 [ xlabel = " true " ];
+block_1 [ label = " block_1 \n  x  < 1\n "
+];
+block_1 -> block_2 [ xlabel = " true " ];
+block_1 -> block_3 [ xlabel = " false " ];
+block_2 [ label = " block_2 \na  :=  b \n "
+];
+block_2 -> block_1 [ xlabel = " true " ];
+block_3 [ label = " block_3 \n " ]
+
+
+block_4 [ label = " block_0 \n ...\n " ];
+block_4 -> block_5 [ xlabel = " true " ];
+}
