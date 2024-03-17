@@ -1,13 +1,13 @@
 digraph {
 n0 [label="goal:goal_name
  -----------------------------------
-name: D1; record: CLASS; return_type: D1
-name: Sum; record: CLASS; return_type: Sum
+name: A; record: CLASS; return_type: A
+name: Bar; record: CLASS; return_type: Bar
 "];
-n1 [label="CLASS:D1
+n1 [label="CLASS:A
  -----------------------------------
 name: main; record: METHOD; return_type: TYPE_VOID
-name: this; record: VARIABLE; return_type: D1
+name: this; record: VARIABLE; return_type: A
 "];
 n2 [label="METHOD:main
  -----------------------------------
@@ -15,16 +15,30 @@ name: a; record: VARIABLE; return_type: TYPE_STRING[]
 "];
 n1 -> n2
 n0 -> n1
-n3 [label="CLASS:Sum
+n3 [label="CLASS:Bar
  -----------------------------------
-name: calcSum; record: METHOD; return_type: TYPE_INT
-name: this; record: VARIABLE; return_type: Sum
+name: foo; record: METHOD; return_type: TYPE_INT
+name: foo2; record: METHOD; return_type: TYPE_INT
+name: foo3; record: METHOD; return_type: TYPE_INT
+name: this; record: VARIABLE; return_type: Bar
 "];
-n4 [label="METHOD:calcSum
+n4 [label="METHOD:foo
  -----------------------------------
-name: num; record: VARIABLE; return_type: TYPE_INT
-name: sum; record: VARIABLE; return_type: TYPE_INT
+name: aux; record: VARIABLE; return_type: TYPE_INT
+name: aux2; record: VARIABLE; return_type: TYPE_BOOLEAN
 "];
 n3 -> n4
+n5 [label="METHOD:foo2
+ -----------------------------------
+name: p1; record: VARIABLE; return_type: TYPE_INT
+"];
+n3 -> n5
+n6 [label="METHOD:foo3
+ -----------------------------------
+name: p1; record: VARIABLE; return_type: TYPE_INT
+name: p2; record: VARIABLE; return_type: TYPE_INT
+name: p3; record: VARIABLE; return_type: TYPE_BOOLEAN
+"];
+n3 -> n6
 n0 -> n3
 }

@@ -1,5 +1,60 @@
-D1.main
-Sum.calcSum
-iconst 0
-istore sum
-goto block_3
+A.main
+iload _t1
+print
+block_1
+Bar.foo
+iconst 1
+istore aux
+iconst TRUE
+istore aux2
+iload _t2
+istore aux
+iload _t3
+istore aux
+iload aux
+ireturn
+block_3
+Bar.foo2
+iload p1
+iconst 2
+ilt
+istore _t4
+iload _t4
+iffalse goto block_6
+goto block_5
+block_5
+	iconst 10
+	print
+	goto block_7
+block_7
+	iconst 1
+	ireturn
+block_8
+block_6
+	iconst 0
+	print
+	goto block_7
+Bar.foo3
+iload p3
+iffalse goto block_11
+goto block_10
+block_10
+	iconst 1
+	print
+	goto block_12
+block_12
+	iload p1
+	print
+	iload p2
+	iload p1
+	isub
+	istore _t5
+	iload _t5
+	print
+	iconst 4
+	ireturn
+block_13
+block_11
+	iconst 0
+	print
+	goto block_12

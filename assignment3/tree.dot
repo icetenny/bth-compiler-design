@@ -1,7 +1,7 @@
 digraph {
 n0 [label="GOAL line : 1"];
 n1 [label="MAIN_CLASS_DECLARATION line : 1"];
-n2 [label="Identifier:D1 , line:1"];
+n2 [label="Identifier:A , line:1"];
 n1 -> n2
 n3 [label="CLASS_BODY line : 3"];
 n4 [label="METHOD_DECLARATION line : 2"];
@@ -24,16 +24,14 @@ n13 [label="STATEMENT:STATEMENT_GROUP , line:3"];
 n14 [label="STATEMENT:PRINT , line:3"];
 n15 [label="EXPRESSION:CALL_FUNCTION , line:3"];
 n16 [label="EXPRESSION:NEW_CLASS_OBJECT , line:3"];
-n17 [label="Identifier:Sum , line:3"];
+n17 [label="Identifier:Bar , line:3"];
 n16 -> n17
 n15 -> n16
 n18 [label="EXPRESSION:CALL_METHOD , line:3"];
-n19 [label="Identifier:calcSum , line:3"];
+n19 [label="Identifier:foo , line:3"];
 n18 -> n19
 n15 -> n18
 n20 [label="EXPRESSION_PARAMETER line : 3"];
-n21 [label="Integer_Literal:100 , line:3"];
-n20 -> n21
 n15 -> n20
 n14 -> n15
 n13 -> n14
@@ -42,74 +40,186 @@ n4 -> n12
 n3 -> n4
 n1 -> n3
 n0 -> n1
-n22 [label="CLASS_DECLARATION line : 7"];
-n23 [label="Identifier:Sum , line:7"];
-n22 -> n23
-n24 [label="CLASS_BODY line : 8"];
-n25 [label="METHOD_DECLARATION line : 8"];
-n26 [label="RETURN_TYPE line : 8"];
-n27 [label="TYPE_INT line : 8"];
-n26 -> n27
+n21 [label="CLASS_DECLARATION line : 7"];
+n22 [label="Identifier:Bar , line:7"];
+n21 -> n22
+n23 [label="CLASS_BODY line : 8"];
+n24 [label="METHOD_DECLARATION line : 8"];
+n25 [label="RETURN_TYPE line : 8"];
+n26 [label="TYPE_INT line : 8"];
 n25 -> n26
-n28 [label="Identifier:calcSum , line:8"];
-n25 -> n28
-n29 [label="PARAMETER_LIST line : 8"];
-n30 [label="PARAMETER line : 8"];
-n31 [label="TYPE_INT line : 8"];
+n24 -> n25
+n27 [label="Identifier:foo , line:8"];
+n24 -> n27
+n28 [label="PARAMETER_LIST line : 8"];
+n24 -> n28
+n29 [label="METHOD_BODY line : 9"];
+n30 [label="VAR_DECLARATION line : 9"];
+n31 [label="TYPE_INT line : 9"];
 n30 -> n31
-n32 [label="Identifier:num , line:8"];
+n32 [label="Identifier:aux , line:9"];
 n30 -> n32
 n29 -> n30
-n25 -> n29
-n33 [label="METHOD_BODY line : 9"];
-n34 [label="VAR_DECLARATION line : 9"];
-n35 [label="TYPE_INT line : 9"];
-n34 -> n35
-n36 [label="Identifier:sum , line:9"];
-n34 -> n36
+n33 [label="VAR_DECLARATION line : 10"];
+n34 [label="TYPE_BOOLEAN line : 10"];
 n33 -> n34
-n37 [label="STATEMENT:ASSIGN , line:10"];
-n38 [label="Identifier:sum , line:10"];
-n37 -> n38
-n39 [label="Integer_Literal:0 , line:10"];
-n37 -> n39
-n33 -> n37
-n40 [label="STATEMENT:WHILE , line:11"];
-n41 [label="EXPRESSION:< , line:11"];
-n42 [label="Integer_Literal:0 , line:11"];
-n41 -> n42
-n43 [label="Identifier:num , line:11"];
-n41 -> n43
-n40 -> n41
-n44 [label="STATEMENT:STATEMENT_GROUP , line:12"];
-n45 [label="STATEMENT:ASSIGN , line:12"];
-n46 [label="Identifier:sum , line:12"];
-n45 -> n46
-n47 [label="EXPRESSION:+ , line:12"];
-n48 [label="Identifier:sum , line:12"];
-n47 -> n48
-n49 [label="Identifier:num , line:12"];
-n47 -> n49
-n45 -> n47
+n35 [label="Identifier:aux2 , line:10"];
+n33 -> n35
+n29 -> n33
+n36 [label="STATEMENT:ASSIGN , line:11"];
+n37 [label="Identifier:aux , line:11"];
+n36 -> n37
+n38 [label="Integer_Literal:1 , line:11"];
+n36 -> n38
+n29 -> n36
+n39 [label="STATEMENT:ASSIGN , line:12"];
+n40 [label="Identifier:aux2 , line:12"];
+n39 -> n40
+n41 [label="EXPRESSION:TRUE , line:12"];
+n39 -> n41
+n29 -> n39
+n42 [label="STATEMENT:ASSIGN , line:13"];
+n43 [label="Identifier:aux , line:13"];
+n42 -> n43
+n44 [label="EXPRESSION:CALL_FUNCTION , line:13"];
+n45 [label="EXPRESSION:THIS , line:13"];
 n44 -> n45
-n50 [label="STATEMENT:ASSIGN , line:13"];
-n51 [label="Identifier:num , line:13"];
+n46 [label="EXPRESSION:CALL_METHOD , line:13"];
+n47 [label="Identifier:foo2 , line:13"];
+n46 -> n47
+n44 -> n46
+n48 [label="EXPRESSION_PARAMETER line : 13"];
+n49 [label="Identifier:aux , line:13"];
+n48 -> n49
+n44 -> n48
+n42 -> n44
+n29 -> n42
+n50 [label="STATEMENT:ASSIGN , line:14"];
+n51 [label="Identifier:aux , line:14"];
 n50 -> n51
-n52 [label="EXPRESSION:- , line:13"];
-n53 [label="Identifier:num , line:13"];
+n52 [label="EXPRESSION:CALL_FUNCTION , line:14"];
+n53 [label="EXPRESSION:THIS , line:14"];
 n52 -> n53
-n54 [label="Integer_Literal:1 , line:13"];
+n54 [label="EXPRESSION:CALL_METHOD , line:14"];
+n55 [label="Identifier:foo3 , line:14"];
+n54 -> n55
 n52 -> n54
+n56 [label="EXPRESSION_PARAMETER line : 14"];
+n57 [label="Integer_Literal:2 , line:14"];
+n56 -> n57
+n58 [label="Integer_Literal:5 , line:14"];
+n56 -> n58
+n59 [label="Identifier:aux2 , line:14"];
+n56 -> n59
+n52 -> n56
 n50 -> n52
-n44 -> n50
-n40 -> n44
-n33 -> n40
-n25 -> n33
-n55 [label="RETURN line : 8"];
-n56 [label="Identifier:sum , line:15"];
-n55 -> n56
-n25 -> n55
-n24 -> n25
-n22 -> n24
-n0 -> n22
+n29 -> n50
+n24 -> n29
+n60 [label="RETURN line : 8"];
+n61 [label="Identifier:aux , line:15"];
+n60 -> n61
+n24 -> n60
+n23 -> n24
+n62 [label="METHOD_DECLARATION line : 18"];
+n63 [label="RETURN_TYPE line : 18"];
+n64 [label="TYPE_INT line : 18"];
+n63 -> n64
+n62 -> n63
+n65 [label="Identifier:foo2 , line:18"];
+n62 -> n65
+n66 [label="PARAMETER_LIST line : 18"];
+n67 [label="PARAMETER line : 18"];
+n68 [label="TYPE_INT line : 18"];
+n67 -> n68
+n69 [label="Identifier:p1 , line:18"];
+n67 -> n69
+n66 -> n67
+n62 -> n66
+n70 [label="METHOD_BODY line : 19"];
+n71 [label="STATEMENT:IF_ELSE , line:19"];
+n72 [label="EXPRESSION:< , line:19"];
+n73 [label="Identifier:p1 , line:19"];
+n72 -> n73
+n74 [label="Integer_Literal:2 , line:19"];
+n72 -> n74
+n71 -> n72
+n75 [label="STATEMENT:PRINT , line:20"];
+n76 [label="Integer_Literal:10 , line:20"];
+n75 -> n76
+n71 -> n75
+n77 [label="STATEMENT:PRINT , line:22"];
+n78 [label="Integer_Literal:0 , line:22"];
+n77 -> n78
+n71 -> n77
+n70 -> n71
+n62 -> n70
+n79 [label="RETURN line : 18"];
+n80 [label="Integer_Literal:1 , line:24"];
+n79 -> n80
+n62 -> n79
+n23 -> n62
+n81 [label="METHOD_DECLARATION line : 27"];
+n82 [label="RETURN_TYPE line : 27"];
+n83 [label="TYPE_INT line : 27"];
+n82 -> n83
+n81 -> n82
+n84 [label="Identifier:foo3 , line:27"];
+n81 -> n84
+n85 [label="PARAMETER_LIST line : 27"];
+n86 [label="PARAMETER line : 27"];
+n87 [label="TYPE_INT line : 27"];
+n86 -> n87
+n88 [label="Identifier:p1 , line:27"];
+n86 -> n88
+n85 -> n86
+n89 [label="PARAMETER line : 27"];
+n90 [label="TYPE_INT line : 27"];
+n89 -> n90
+n91 [label="Identifier:p2 , line:27"];
+n89 -> n91
+n85 -> n89
+n92 [label="PARAMETER line : 27"];
+n93 [label="TYPE_BOOLEAN line : 27"];
+n92 -> n93
+n94 [label="Identifier:p3 , line:27"];
+n92 -> n94
+n85 -> n92
+n81 -> n85
+n95 [label="METHOD_BODY line : 28"];
+n96 [label="STATEMENT:IF_ELSE , line:28"];
+n97 [label="Identifier:p3 , line:28"];
+n96 -> n97
+n98 [label="STATEMENT:STATEMENT_GROUP , line:29"];
+n99 [label="STATEMENT:PRINT , line:29"];
+n100 [label="Integer_Literal:1 , line:29"];
+n99 -> n100
+n98 -> n99
+n96 -> n98
+n101 [label="STATEMENT:STATEMENT_GROUP , line:31"];
+n102 [label="STATEMENT:PRINT , line:31"];
+n103 [label="Integer_Literal:0 , line:31"];
+n102 -> n103
+n101 -> n102
+n96 -> n101
+n95 -> n96
+n104 [label="STATEMENT:PRINT , line:33"];
+n105 [label="Identifier:p1 , line:33"];
+n104 -> n105
+n95 -> n104
+n106 [label="STATEMENT:PRINT , line:34"];
+n107 [label="EXPRESSION:- , line:34"];
+n108 [label="Identifier:p2 , line:34"];
+n107 -> n108
+n109 [label="Identifier:p1 , line:34"];
+n107 -> n109
+n106 -> n107
+n95 -> n106
+n81 -> n95
+n110 [label="RETURN line : 27"];
+n111 [label="Integer_Literal:4 , line:35"];
+n110 -> n111
+n81 -> n110
+n23 -> n81
+n21 -> n23
+n0 -> n21
 }

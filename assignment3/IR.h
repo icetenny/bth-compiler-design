@@ -99,11 +99,21 @@ public:
         {
             return {load_var(rhs), store_var(result)};
         }
-        else if (op == "GOTO"){
+        else if (op == "GOTO")
+        {
             return {"goto " + rhs};
         }
-        else if (op == "IFFALSE"){
+        else if (op == "IFFALSE")
+        {
             return {load_var(result), "iffalse goto " + rhs};
+        }
+        else if (op == "RETURN")
+        {
+            return {load_var(result), "ireturn"};
+        }
+        else if (op == "PRINT")
+        {
+            return {load_var(result), "print"};
         }
         return {};
     }
@@ -129,14 +139,14 @@ public:
     int id;
     string name;
     string method_name;
+    bool is_entry = false;
     BasicBlock *true_exit = NULL;
     BasicBlock *false_exit = NULL;
     TAC *condition;
     list<TAC *> tac_instruction;
-    
 
     BasicBlock(int block_id) : id(block_id), name("block_" + to_string(block_id)) {}
-    BasicBlock(int block_id, string m_name) : id(block_id), name("block_" + to_string(block_id)), method_name(m_name) {}
+    BasicBlock(int block_id, string m_name) : id(block_id), name("block_" + to_string(block_id)), method_name(m_name){}
 };
 
 class IR
@@ -190,6 +200,7 @@ public:
 
             // Create start basic block with method_name
             BasicBlock *start_block = new BasicBlock(bbid++, current_class + "." + current_method);
+            start_block->is_entry = true;
             list_blocks.push_back(start_block);
             list_entry_blocks.push_back(start_block);
             current_block = start_block;
@@ -487,7 +498,7 @@ public:
             add_false_exit(condition_block, merged_block, cond);
             add_true_exit(condition_block, action_block);
 
-            // Execute while 
+            // Execute while
             current_block = action_block;
             child_iter++;
             execute_ir_statement(*child_iter);
@@ -504,7 +515,7 @@ public:
         string ex_value = n->value;
         string lhs, rhs, op, res;
 
-        op = "return";
+        op = "RETURN";
 
         auto child_iter = n->children.begin();
         res = execute_ir_expression(*child_iter);
@@ -514,13 +525,15 @@ public:
         return res;
     }
 
-    void add_true_exit(BasicBlock* from_block, BasicBlock* to_block){
+    void add_true_exit(BasicBlock *from_block, BasicBlock *to_block)
+    {
         from_block->true_exit = to_block;
         TAC *true_tac = new TAC("", "", "GOTO", to_block->name);
         from_block->tac_instruction.push_back(true_tac);
     }
 
-    void add_false_exit(BasicBlock* from_block, BasicBlock* to_block, string condition){
+    void add_false_exit(BasicBlock *from_block, BasicBlock *to_block, string condition)
+    {
         from_block->false_exit = to_block;
         TAC *false_tac = new TAC(condition, "", "IFFALSE", to_block->name);
         current_block->tac_instruction.push_back(false_tac);
@@ -589,66 +602,72 @@ public:
 
         for (BasicBlock *entry_block : list_entry_blocks)
         {
-
-            outwrite(entry_block->method_name);
-
-            for (TAC *inst : entry_block->tac_instruction)
-            {
-                outlist(inst->get_bytecode());
-            }
-
-            gen_true_exit(entry_block);
-
-
+            gen_exit(entry_block);
         }
 
         outStream.close();
         printf("\nJava Bytecode generated at : %s\n", filename);
     }
 
-    string gen_true_exit(BasicBlock* bblock){
-
-
-        for (string checked_block_name : checked_bblock) {
-            if (checked_block_name == bblock->name) {
-                return "NULL";
+    void gen_exit(BasicBlock *bblock)
+    {
+        for (string checked_block_name : checked_bblock)
+        {
+            if (checked_block_name == bblock->name)
+            {
+                return;
             }
+        }
 
         checked_bblock.push_back(bblock->name);
 
-        outwrite(bblock->name);
-
-        for (TAC *inst : bblock->tac_instruction)
+        if (bblock->is_entry)
         {
-            outlist(inst->get_bytecode());
+            outwrite(bblock->method_name);
+            for (TAC *inst : bblock->tac_instruction)
+            {
+                outlist(inst->get_bytecode());
+            }
+        }
+        else
+        {
+            outwrite(bblock->name);
+            for (TAC *inst : bblock->tac_instruction)
+            {
+                outlist(inst->get_bytecode(), true);
+            }
         }
 
-        if (bblock -> true_exit == NULL){
-            return "NULL";
+        if (bblock->true_exit != NULL)
+        {
+            gen_exit(bblock->true_exit);
         }
-        
-        gen_true_exit(bblock->true_exit);
 
-    }
+        if (bblock->false_exit != NULL)
+        {
+            gen_exit(bblock->false_exit);
+        }
 
-        return "NULL";
+        return;
     }
 
     void outwrite(string word, bool indent = false)
     {
         if (word != "")
         {
-            if (indent){
+            if (indent)
+            {
                 outStream << "\t" << word << endl;
+            }
+            else
+            {
 
-            } else{
-
-            outStream << word << endl;
+                outStream << word << endl;
             }
         }
     }
 
-    void outlist(list<string> lw, bool indent=false)
+    void outlist(list<string> lw, bool indent = false)
     {
         for (string word : lw)
         {

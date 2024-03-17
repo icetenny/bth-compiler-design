@@ -1,47 +1,93 @@
 digraph {
  graph [ splines = ortho ]
 node [ shape = box ];
-n0 [label="block_0 : D1.main
+n0 [label="block_0 : A.main
 --------------
-_t0 := new Sum 
+_t0 := new Bar 
 param _t0
-param $100
-_t1 :=  call calcSum 2
+_t1 :=  call foo 1
 PRINT _t1
 "];
 n0 -> n1 [xlabel= "true"];
-n1 [label="block_1 : $END.D1.main
+n1 [label="block_1 : $END.A.main
 --------------
 "];
-n2 [label="block_2 : Sum.calcSum
+n2 [label="block_2 : Bar.foo
 --------------
-sum = $0
-GOTO block_3
+aux = $1
+aux2 = $TRUE
+param THIS
+param aux
+_t2 :=  call foo2 2
+aux = _t2
+param THIS
+param $2
+param $5
+param aux2
+_t3 :=  call foo3 4
+aux = _t3
+RETURN aux
 "];
 n2 -> n3 [xlabel= "true"];
-n3 [label="block_3
+n3 [label="block_3 : $END.Bar.foo
 --------------
-_t2 := $0 < num
-IFFALSE _t2 GOTO block_5
-GOTO block_4
 "];
-n3 -> n4 [xlabel= "true"];
-n3 -> n5 [xlabel= "false"];
-n4 [label="block_4
+n4 [label="block_4 : Bar.foo2
 --------------
-_t3 := sum + num
-sum = _t3
-_t4 := num - $1
-num = _t4
-GOTO block_3
+_t4 := p1 < $2
+IFFALSE _t4 GOTO block_6
+GOTO block_5
 "];
-n4 -> n3 [xlabel= "true"];
+n4 -> n5 [xlabel= "true"];
+n4 -> n6 [xlabel= "false"];
 n5 [label="block_5
 --------------
-return sum
+PRINT $10
+GOTO block_7
 "];
-n5 -> n6 [xlabel= "true"];
-n6 [label="block_6 : $END.Sum.calcSum
+n5 -> n7 [xlabel= "true"];
+n6 [label="block_6
+--------------
+PRINT $0
+GOTO block_7
+"];
+n6 -> n7 [xlabel= "true"];
+n7 [label="block_7
+--------------
+RETURN $1
+"];
+n7 -> n8 [xlabel= "true"];
+n8 [label="block_8 : $END.Bar.foo2
+--------------
+"];
+n9 [label="block_9 : Bar.foo3
+--------------
+IFFALSE p3 GOTO block_11
+GOTO block_10
+"];
+n9 -> n10 [xlabel= "true"];
+n9 -> n11 [xlabel= "false"];
+n10 [label="block_10
+--------------
+PRINT $1
+GOTO block_12
+"];
+n10 -> n12 [xlabel= "true"];
+n11 [label="block_11
+--------------
+PRINT $0
+GOTO block_12
+"];
+n11 -> n12 [xlabel= "true"];
+n12 [label="block_12
+--------------
+PRINT p1
+_t5 := p2 - p1
+PRINT _t5
+RETURN $4
+"];
+n12 -> n13 [xlabel= "true"];
+n13 [label="block_13 : $END.Bar.foo3
 --------------
 "];
 }
