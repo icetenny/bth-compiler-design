@@ -2,12 +2,12 @@ digraph {
 n0 [label="goal:goal_name
  -----------------------------------
 name: A; record: CLASS; return_type: A
-name: Bar; record: CLASS; return_type: Bar
+name: SemanticValidMethodCall; record: CLASS; return_type: SemanticValidMethodCall
 "];
-n1 [label="CLASS:A
+n1 [label="CLASS:SemanticValidMethodCall
  -----------------------------------
 name: main; record: METHOD; return_type: TYPE_VOID
-name: this; record: VARIABLE; return_type: A
+name: this; record: VARIABLE; return_type: SemanticValidMethodCall
 "];
 n2 [label="METHOD:main
  -----------------------------------
@@ -15,30 +15,44 @@ name: a; record: VARIABLE; return_type: TYPE_STRING[]
 "];
 n1 -> n2
 n0 -> n1
-n3 [label="CLASS:Bar
+n3 [label="CLASS:A
  -----------------------------------
-name: foo; record: METHOD; return_type: TYPE_INT
-name: foo2; record: METHOD; return_type: TYPE_INT
-name: foo3; record: METHOD; return_type: TYPE_INT
-name: this; record: VARIABLE; return_type: Bar
+name: a1; record: METHOD; return_type: A
+name: a2; record: METHOD; return_type: TYPE_INT
+name: a3; record: METHOD; return_type: A
+name: a4; record: METHOD; return_type: A
+name: a5; record: METHOD; return_type: TYPE_INT
+name: this; record: VARIABLE; return_type: A
 "];
-n4 [label="METHOD:foo
+n4 [label="METHOD:a1
  -----------------------------------
-name: aux; record: VARIABLE; return_type: TYPE_INT
-name: aux2; record: VARIABLE; return_type: TYPE_BOOLEAN
+name: num; record: VARIABLE; return_type: TYPE_INT
+name: num_aux; record: VARIABLE; return_type: TYPE_INT
 "];
 n3 -> n4
-n5 [label="METHOD:foo2
+n5 [label="METHOD:a2
  -----------------------------------
-name: p1; record: VARIABLE; return_type: TYPE_INT
 "];
 n3 -> n5
-n6 [label="METHOD:foo3
+n6 [label="METHOD:a3
  -----------------------------------
-name: p1; record: VARIABLE; return_type: TYPE_INT
-name: p2; record: VARIABLE; return_type: TYPE_INT
-name: p3; record: VARIABLE; return_type: TYPE_BOOLEAN
+name: a; record: VARIABLE; return_type: A
 "];
 n3 -> n6
+n7 [label="METHOD:a4
+ -----------------------------------
+name: a; record: VARIABLE; return_type: A
+name: i; record: VARIABLE; return_type: TYPE_INT
+name: ia; record: VARIABLE; return_type: TYPE_INT_ARRAY
+"];
+n3 -> n7
+n8 [label="METHOD:a5
+ -----------------------------------
+name: a; record: VARIABLE; return_type: TYPE_BOOLEAN
+name: b; record: VARIABLE; return_type: TYPE_INT
+name: c; record: VARIABLE; return_type: TYPE_INT_ARRAY
+name: d; record: VARIABLE; return_type: A
+"];
+n3 -> n8
 n0 -> n3
 }

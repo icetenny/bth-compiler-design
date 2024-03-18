@@ -12,6 +12,7 @@
 
 using namespace std;
 
+
 class TAC
 {
 public:
@@ -48,6 +49,10 @@ public:
         if (op == "GOTO")
         {
             return op + " " + rhs;
+        }
+        if (op == "call")
+        {
+            return result + " := " + op + " " + lhs + " " + rhs;
         }
 
         return result + " := " + lhs + " " + op + " " + rhs;
@@ -115,12 +120,36 @@ public:
         {
             return {load_var(result), "print"};
         }
+        else if (op == "param")
+        {
+            return {load_var(result)};
+        }
+        else if (op == "store")
+        {
+            return {store_var(result)};
+        }
+        else if (op == "call")
+        {
+            return {"invokevirtual " + lhs, store_var(result)};
+        }
+        else if (op == "STOP")
+        {
+            return {"stop"};
+        }
         return {};
     }
 
     string load_var(string var)
     {
-        if (var[0] == '$')
+        if (var == "TRUE")
+        {
+            return "iconst true";
+        }
+        else if (var == "FALSE")
+        {
+            return "iconst false";
+        }
+        else if (var[0] == '$')
         {
             return "iconst " + var.substr(1);
         }
@@ -146,7 +175,7 @@ public:
     list<TAC *> tac_instruction;
 
     BasicBlock(int block_id) : id(block_id), name("block_" + to_string(block_id)) {}
-    BasicBlock(int block_id, string m_name) : id(block_id), name("block_" + to_string(block_id)), method_name(m_name){}
+    BasicBlock(int block_id, string m_name) : id(block_id), name("block_" + to_string(block_id)), method_name(m_name) {}
 };
 
 class IR
@@ -161,6 +190,8 @@ public:
     string current_class, current_method;
     std::ofstream outStream;
     list<string> checked_bblock;
+    SymbolTable ST;
+    Scope *current_method_scope;
 
     IR() {}
 
@@ -169,8 +200,9 @@ public:
         cout << "IR Start" << endl;
     }
 
-    void init(Node *root_node)
+    void init(Node *root_node, SymbolTable STable)
     {
+        ST = STable;
         cout << root_node->type << endl;
         execute(root_node);
     }
@@ -204,6 +236,35 @@ public:
             list_blocks.push_back(start_block);
             list_entry_blocks.push_back(start_block);
             current_block = start_block;
+
+            // Create TAC for method param
+            child_iter++;
+            // auto param_iter = (*child_iter)->children.begin();
+
+            for (Node *param_node : (*child_iter)->children)
+            {
+                string param_name = param_node->children.back()->value;
+                TAC *tac = new TAC(param_name, "", "store", "");
+                current_block->tac_instruction.push_back(tac);
+            }
+
+            // Get Method Scope from ST
+            for (Scope *class_scope : ST.root_scope->children_scope)
+            {
+                if (class_scope->scope_name == current_class)
+                {
+                    for (Scope *method_scope : class_scope->children_scope)
+                    {
+                        if (method_scope->scope_name == current_method)
+                        {
+                            current_method_scope = method_scope;
+                            // cout << "Now in method scope: " << current_method_scope->scope_name << endl;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
         }
 
         if (type == "EXPRESSION")
@@ -230,84 +291,122 @@ public:
 
         if (type == "METHOD_DECLARATION")
         {
+            // // Make end bblock
+            // BasicBlock *end_block = new BasicBlock(bbid++, "$END." + current_class + "." + current_method);
+            // list_blocks.push_back(end_block);
+            // current_block->true_exit = end_block;
+
             // Make end bblock
-            BasicBlock *end_block = new BasicBlock(bbid++, "$END." + current_class + "." + current_method);
-            list_blocks.push_back(end_block);
-            current_block->true_exit = end_block;
+            TAC *tac = new TAC("", "", "STOP", "");
+            current_block->tac_instruction.push_back(tac);
         }
     }
 
-    string execute_ir_expression(Node *n)
+    list<string> execute_ir_expression(Node *n)
     {
         string ex_type = n->type;
         string ex_value = n->value;
-        string lhs, rhs, op, res;
+        string lhs, rhs, op, res, type;
 
         if (ex_type == "Identifier")
         {
-            return ex_value;
+            Record *c = current_method_scope->lookup_record(ex_value);
+            // c->print_record();
+            return {ex_value, c->returntype};
         }
 
         if (ex_type == "Integer_Literal")
         {
-            return "$" + ex_value;
+            return {"$" + ex_value, "TYPE_INT"};
         }
 
-        if (ex_value == "TRUE" || ex_value == "FALSE")
+        if (ex_value == "TRUE")
         {
-            return "$" + ex_value;
+            return {"TRUE", "TYPE_BOOLEAN"};
+        }
+        if (ex_value == "FALSE")
+        {
+            return {"FALSE", "TYPE_BOOLEAN"};
         }
 
-        if (ex_value == "NOT" || ex_value == "LENGTH")
+        if (ex_value == "NOT")
         {
             op = ex_value;
-
-            lhs = "";
             auto child_iter = n->children.begin();
-            rhs = execute_ir_expression(*child_iter);
+            rhs = execute_ir_expression(*child_iter).front();
 
             res = "_t" + to_string(temp_var_id++);
 
             TAC *tac = new TAC(res, lhs, op, rhs);
             current_block->tac_instruction.push_back(tac);
-            // tac->print_tac();
 
-            return res;
+            return {res, "TYPE_BOOLEAN"};
+        }
+
+        if (ex_value == "LENGTH")
+        {
+            op = ex_value;
+            auto child_iter = n->children.begin();
+            rhs = execute_ir_expression(*child_iter).front();
+
+            res = "_t" + to_string(temp_var_id++);
+
+            TAC *tac = new TAC(res, lhs, op, rhs);
+            current_block->tac_instruction.push_back(tac);
+
+            return {res, "TYPE_INT"};
         }
 
         if (ex_value == "ARRAY_INDEX")
         {
             auto child_iter = n->children.begin();
-            lhs = execute_ir_expression(*child_iter);
+            lhs = execute_ir_expression(*child_iter).front();
             child_iter++;
-            rhs = execute_ir_expression(*child_iter);
+            rhs = execute_ir_expression(*child_iter).front();
 
-            return lhs + "[" + rhs + "]";
+            return {lhs + "[" + rhs + "]", "TYPE_INT_ARRAY"};
         }
 
         if (ex_value == "THIS")
+
         {
-            return "THIS";
+            Record *c = current_method_scope->lookup_record("this");
+            // c->print_record();
+            return {"THIS", c->returntype};
         }
 
-        if (ex_value == "+" || ex_value == "-" || ex_value == "*" || ex_value == "/" ||
-            ex_value == ">" || ex_value == "<" || ex_value == "==" || ex_value == "AND" || ex_value == "OR")
+        if (ex_value == "+" || ex_value == "-" || ex_value == "*" || ex_value == "/")
         {
             op = ex_value;
 
             auto child_iter = n->children.begin();
-            lhs = execute_ir_expression(*child_iter);
+            lhs = execute_ir_expression(*child_iter).front();
             child_iter++;
-            rhs = execute_ir_expression(*child_iter);
+            rhs = execute_ir_expression(*child_iter).front();
 
             res = "_t" + to_string(temp_var_id++);
 
             TAC *tac = new TAC(res, lhs, op, rhs);
             current_block->tac_instruction.push_back(tac);
 
-            // tac->print_tac();
+            return {res, "TYPE_INT"};
+        }
 
-            return res;
+        if (ex_value == ">" || ex_value == "<" || ex_value == "==" || ex_value == "AND" || ex_value == "OR")
+        {
+            op = ex_value;
+
+            auto child_iter = n->children.begin();
+            lhs = execute_ir_expression(*child_iter).front();
+            child_iter++;
+            rhs = execute_ir_expression(*child_iter).front();
+
+            res = "_t" + to_string(temp_var_id++);
+
+            TAC *tac = new TAC(res, lhs, op, rhs);
+            current_block->tac_instruction.push_back(tac);
+
+            return {res, "TYPE_BOOLEAN"};
         }
 
         if (ex_value == "NEW_INT_ARRAY")
@@ -315,14 +414,14 @@ public:
             op = "new";
             lhs = "INT_ARRAY";
             auto child_iter = n->children.begin();
-            rhs = execute_ir_expression(*child_iter);
+            rhs = execute_ir_expression(*child_iter).front();
 
             res = "_t" + to_string(temp_var_id++);
 
             TAC *tac = new TAC(res, lhs, op, rhs);
             current_block->tac_instruction.push_back(tac);
 
-            return res;
+            return {res, "TYPE_INT_ARRAY"};
         }
 
         if (ex_value == "NEW_CLASS_OBJECT")
@@ -330,14 +429,17 @@ public:
             op = "new";
 
             auto child_iter = n->children.begin();
-            lhs = execute_ir_expression(*child_iter);
+            list<string> exp = execute_ir_expression(*child_iter);
+
+            lhs = exp.front();
+            string type = exp.back();
 
             res = "_t" + to_string(temp_var_id++);
 
             TAC *tac = new TAC(res, lhs, op, rhs);
             current_block->tac_instruction.push_back(tac);
 
-            return res;
+            return {res, type};
         }
 
         if (ex_value == "CALL_FUNCTION")
@@ -345,36 +447,42 @@ public:
             auto child_iter = n->children.begin();
 
             // Execute object
-            string param1 = execute_ir_expression(*child_iter);
-            TAC *tac_1 = new TAC(param1, "", "param", "");
-            current_block->tac_instruction.push_back(tac_1);
+            list<string> ex_ir = execute_ir_expression(*child_iter);
+            string param1 = ex_ir.front();
+            string type_p = ex_ir.back();
+
+            // TAC for called class
+            // cout << "................" <<type_p << endl;
+            // TAC *tac_1 = new TAC(param1, "", "param", "");
+            // current_block->tac_instruction.push_back(tac_1);
 
             // Execute called function
             child_iter++;
             string func_name = (*(*child_iter)->children.begin())->value;
 
-            op = "call " + func_name;
+            op = "call";
+            string called_func = type_p + "." + func_name;
 
             // At param list
             child_iter++;
             int param_size = (*child_iter)->children.size() + 1;
-            for (auto param_iter = (*child_iter)->children.begin(); param_iter != (*child_iter)->children.end(); param_iter++)
+            for (auto param_iter = (*child_iter)->children.rbegin(); param_iter != (*child_iter)->children.rend(); param_iter++)
             {
-                string param_res = execute_ir_expression(*param_iter);
+                string param_res = execute_ir_expression(*param_iter).front();
                 TAC *tac = new TAC(param_res, "", "param", "");
                 current_block->tac_instruction.push_back(tac);
             }
 
             res = "_t" + to_string(temp_var_id++);
-            TAC *tac_2 = new TAC(res, "", op, to_string(param_size));
+            TAC *tac_2 = new TAC(res, called_func, op, to_string(param_size));
             current_block->tac_instruction.push_back(tac_2);
-            return res;
+            return {res, type_p};
         }
 
-        return "NULL";
+        return {"NULL", "NULL"};
     }
 
-    string execute_ir_statement(Node *n)
+    void execute_ir_statement(Node *n)
     {
         string ex_type = n->type;
         string ex_value = n->value;
@@ -386,14 +494,13 @@ public:
             {
                 execute_ir_statement(n = child);
             }
-            return "NULL";
         }
 
         if (ex_value == "PRINT")
         {
             op = ex_value;
             auto child_iter = n->children.begin();
-            res = execute_ir_expression(*child_iter);
+            res = execute_ir_expression(*child_iter).front();
 
             TAC *tac = new TAC(res, lhs, op, rhs);
             current_block->tac_instruction.push_back(tac);
@@ -403,10 +510,10 @@ public:
         {
             op = "=";
             auto child_iter = n->children.begin();
-            res = execute_ir_expression(*child_iter);
+            res = execute_ir_expression(*child_iter).front();
 
             child_iter++;
-            rhs = execute_ir_expression(*child_iter);
+            rhs = execute_ir_expression(*child_iter).front();
 
             TAC *tac = new TAC(res, lhs, op, rhs);
             current_block->tac_instruction.push_back(tac);
@@ -415,7 +522,7 @@ public:
         if (ex_value == "IF")
         {
             auto child_iter = n->children.begin();
-            cond = execute_ir_expression(*child_iter);
+            cond = execute_ir_expression(*child_iter).front();
 
             // Create new basic block
             BasicBlock *if_block = new BasicBlock(bbid++);
@@ -433,7 +540,7 @@ public:
             current_block = if_block;
             child_iter++;
             execute_ir_statement(*child_iter);
-            add_true_exit(if_block, merged_block);
+            add_true_exit(current_block, merged_block);
 
             // Set merged block as current block
             current_block = merged_block;
@@ -441,7 +548,7 @@ public:
         if (ex_value == "IF_ELSE")
         {
             auto child_iter = n->children.begin();
-            cond = execute_ir_expression(*child_iter);
+            cond = execute_ir_expression(*child_iter).front();
 
             // Create if block
             BasicBlock *if_block = new BasicBlock(bbid++);
@@ -463,13 +570,13 @@ public:
             current_block = if_block;
             child_iter++;
             execute_ir_statement(*child_iter);
-            add_true_exit(if_block, merged_block);
+            add_true_exit(current_block, merged_block);
 
             // Execute else statement
             current_block = else_block;
             child_iter++;
             execute_ir_statement(*child_iter);
-            add_true_exit(else_block, merged_block);
+            add_true_exit(current_block, merged_block);
 
             // Set merged block as current block
             current_block = merged_block;
@@ -494,7 +601,7 @@ public:
             // Execute condition block
             current_block = condition_block;
             auto child_iter = n->children.begin();
-            cond = execute_ir_expression(*child_iter);
+            cond = execute_ir_expression(*child_iter).front();
             add_false_exit(condition_block, merged_block, cond);
             add_true_exit(condition_block, action_block);
 
@@ -502,14 +609,13 @@ public:
             current_block = action_block;
             child_iter++;
             execute_ir_statement(*child_iter);
-            add_true_exit(action_block, condition_block);
+            add_true_exit(current_block, condition_block);
 
             current_block = merged_block;
         }
-        return "NULL";
     }
 
-    string execute_ir_return(Node *n)
+    void execute_ir_return(Node *n)
     {
         string ex_type = n->type;
         string ex_value = n->value;
@@ -518,11 +624,10 @@ public:
         op = "RETURN";
 
         auto child_iter = n->children.begin();
-        res = execute_ir_expression(*child_iter);
+        res = execute_ir_expression(*child_iter).front();
 
         TAC *tac = new TAC(res, lhs, op, rhs);
         current_block->tac_instruction.push_back(tac);
-        return res;
     }
 
     void add_true_exit(BasicBlock *from_block, BasicBlock *to_block)
@@ -623,18 +728,18 @@ public:
 
         if (bblock->is_entry)
         {
-            outwrite(bblock->method_name);
+            outwrite(bblock->method_name + ":");
             for (TAC *inst : bblock->tac_instruction)
             {
-                outlist(inst->get_bytecode());
+                outlist(inst->get_bytecode(), 1);
             }
         }
         else
         {
-            outwrite(bblock->name);
+            outwrite(bblock->name + ":", 1);
             for (TAC *inst : bblock->tac_instruction)
             {
-                outlist(inst->get_bytecode(), true);
+                outlist(inst->get_bytecode(), 2);
             }
         }
 
@@ -651,23 +756,20 @@ public:
         return;
     }
 
-    void outwrite(string word, bool indent = false)
+    void outwrite(string word, int indent = 0)
     {
         if (word != "")
         {
-            if (indent)
+            string tab = "";
+            for (int i = 0; i < indent; ++i)
             {
-                outStream << "\t" << word << endl;
+                tab += "\t";
             }
-            else
-            {
-
-                outStream << word << endl;
-            }
+            outStream << tab << word << endl;
         }
     }
 
-    void outlist(list<string> lw, bool indent = false)
+    void outlist(list<string> lw, int indent = 0)
     {
         for (string word : lw)
         {

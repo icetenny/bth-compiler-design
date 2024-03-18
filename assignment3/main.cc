@@ -83,7 +83,7 @@ int main(int argc, char **argv)
 
 				IR cfg;
 				cfg.test_print();
-				cfg.init(root);
+				cfg.init(root, ST);
 				cfg.generate_tree();
 
 				// Part 2
