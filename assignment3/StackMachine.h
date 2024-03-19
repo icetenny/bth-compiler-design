@@ -166,8 +166,8 @@ public:
     list<string> variable_list;
     string class_part, method_part;
 
-    Method(){
-
+    Method()
+    {
     }
 
     Method(string name)
@@ -242,7 +242,8 @@ public:
         }
     }
 
-    void goto_block(string block_name){
+    void goto_block(string block_name)
+    {
         awaiting_instruction.clear();
         for (Instruction *i : method->block_map[block_name]->instruction_list)
         {
@@ -315,7 +316,8 @@ public:
         }
     }
 
-    Method* get_method(string s){
+    Method *get_method(string s)
+    {
         return method_map[s];
     }
 };
@@ -416,7 +418,7 @@ public:
 
             if (cmd == "stop")
             {
-                cout << "Exiting..." << endl;
+                // cout << "Exiting..." << endl;
                 break;
             }
             else if (cmd == "istore")
@@ -500,16 +502,16 @@ public:
                 {
                     if (d->value == 1)
                     {
-                        cout << ">>> true" << endl;
+                        cout << "true" << endl;
                     }
                     else if (d->value == 0)
                     {
-                        cout << ">>> false" << endl;
+                        cout << "false" << endl;
                     }
                 }
                 else
                 {
-                    cout << ">>> " << d->value << endl;
+                    cout << d->value << endl;
                 }
             }
             else if (cmd == "invokevirtual")
@@ -527,12 +529,15 @@ public:
                 current_activation = activation_stack->stack.back();
             }
 
-            else if (cmd == "goto"){
+            else if (cmd == "goto")
+            {
                 current_activation->goto_block(arg);
             }
-            else if (cmd == "iffalse"){
+            else if (cmd == "iffalse")
+            {
                 int d = data_stack->pop()->value;
-                if (d == 0){
+                if (d == 0)
+                {
                     current_activation->goto_block(arg);
                 }
             }

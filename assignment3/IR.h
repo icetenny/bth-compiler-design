@@ -12,7 +12,6 @@
 
 using namespace std;
 
-
 class TAC
 {
 public:
@@ -58,6 +57,7 @@ public:
         return result + " := " + lhs + " " + op + " " + rhs;
     }
 
+    // Part 2
     list<string> get_bytecode()
     {
         if (op == "+")
@@ -211,7 +211,6 @@ public:
     {
         string type = n->type;
         string value = n->value;
-        // int id = n->id;
         list<Node *> children = n->children;
 
         lineno = n->lineno;
@@ -291,11 +290,6 @@ public:
 
         if (type == "METHOD_DECLARATION")
         {
-            // // Make end bblock
-            // BasicBlock *end_block = new BasicBlock(bbid++, "$END." + current_class + "." + current_method);
-            // list_blocks.push_back(end_block);
-            // current_block->true_exit = end_block;
-
             // Make end bblock
             TAC *tac = new TAC("", "", "STOP", "");
             current_block->tac_instruction.push_back(tac);
@@ -368,10 +362,8 @@ public:
         }
 
         if (ex_value == "THIS")
-
         {
             Record *c = current_method_scope->lookup_record("this");
-            // c->print_record();
             return {"THIS", c->returntype};
         }
 
@@ -465,7 +457,9 @@ public:
 
             // At param list
             child_iter++;
-            int param_size = (*child_iter)->children.size() + 1;
+            int param_size = (*child_iter)->children.size();
+            // int param_size = (*child_iter)->children.size()+ 1;
+
             for (auto param_iter = (*child_iter)->children.rbegin(); param_iter != (*child_iter)->children.rend(); param_iter++)
             {
                 string param_res = execute_ir_expression(*param_iter).front();

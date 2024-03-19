@@ -1,13 +1,13 @@
 digraph {
 n0 [label="goal:goal_name
  -----------------------------------
-name: A; record: CLASS; return_type: A
-name: SemanticValidMethodCall; record: CLASS; return_type: SemanticValidMethodCall
+name: C2; record: CLASS; return_type: C2
+name: Sum; record: CLASS; return_type: Sum
 "];
-n1 [label="CLASS:SemanticValidMethodCall
+n1 [label="CLASS:C2
  -----------------------------------
 name: main; record: METHOD; return_type: TYPE_VOID
-name: this; record: VARIABLE; return_type: SemanticValidMethodCall
+name: this; record: VARIABLE; return_type: C2
 "];
 n2 [label="METHOD:main
  -----------------------------------
@@ -15,44 +15,16 @@ name: a; record: VARIABLE; return_type: TYPE_STRING[]
 "];
 n1 -> n2
 n0 -> n1
-n3 [label="CLASS:A
+n3 [label="CLASS:Sum
  -----------------------------------
-name: a1; record: METHOD; return_type: A
-name: a2; record: METHOD; return_type: TYPE_INT
-name: a3; record: METHOD; return_type: A
-name: a4; record: METHOD; return_type: A
-name: a5; record: METHOD; return_type: TYPE_INT
-name: this; record: VARIABLE; return_type: A
+name: calcSum; record: METHOD; return_type: TYPE_INT
+name: this; record: VARIABLE; return_type: Sum
 "];
-n4 [label="METHOD:a1
+n4 [label="METHOD:calcSum
  -----------------------------------
 name: num; record: VARIABLE; return_type: TYPE_INT
-name: num_aux; record: VARIABLE; return_type: TYPE_INT
+name: sum; record: VARIABLE; return_type: TYPE_INT
 "];
 n3 -> n4
-n5 [label="METHOD:a2
- -----------------------------------
-"];
-n3 -> n5
-n6 [label="METHOD:a3
- -----------------------------------
-name: a; record: VARIABLE; return_type: A
-"];
-n3 -> n6
-n7 [label="METHOD:a4
- -----------------------------------
-name: a; record: VARIABLE; return_type: A
-name: i; record: VARIABLE; return_type: TYPE_INT
-name: ia; record: VARIABLE; return_type: TYPE_INT_ARRAY
-"];
-n3 -> n7
-n8 [label="METHOD:a5
- -----------------------------------
-name: a; record: VARIABLE; return_type: TYPE_BOOLEAN
-name: b; record: VARIABLE; return_type: TYPE_INT
-name: c; record: VARIABLE; return_type: TYPE_INT_ARRAY
-name: d; record: VARIABLE; return_type: A
-"];
-n3 -> n8
 n0 -> n3
 }

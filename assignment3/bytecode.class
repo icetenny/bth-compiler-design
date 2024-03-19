@@ -1,101 +1,63 @@
-SemanticValidMethodCall.main:
+C2.main:
 	istore a
-	invokevirtual A.a2
+	iconst 100
+	invokevirtual Sum.calcSum
 	istore _t1
 	iload _t1
 	print
 	stop
-A.a1:
+Sum.calcSum:
 	istore num
-	iload num
-	iconst 1
-	ilt
-	istore _t2
-	iload _t2
-	iffalse goto block_3
+	iconst 0
+	istore sum
 	goto block_2
 	block_2:
-		iconst 1
-		istore num_aux
-		goto block_4
-	block_4:
-		iload THIS
-		ireturn
-		stop
-	block_3:
-		invokevirtual A.a3
-		istore _t3
-		invokevirtual A.a2
-		istore _t4
+		iconst 0
 		iload num
+		ilt
+		istore _t2
+		iload _t2
+		iffalse goto block_4
+		goto block_3
+	block_3:
+		iconst 50
+		iload num
+		ilt
+		istore _t3
+		iload sum
+		iconst 2000
+		ilt
+		istore _t4
+		iload _t3
 		iload _t4
-		imul
+		iand
 		istore _t5
 		iload _t5
-		istore num_aux
-		goto block_4
-A.a2:
-	iconst 0
-	ireturn
-	stop
-A.a3:
-	iload _t6
-	istore a
-	iload a
-	ireturn
-	stop
-A.a4:
-	invokevirtual A.a2
-	istore _t8
-	iload _t8
-	invokevirtual A.a1
-	istore _t9
-	invokevirtual A.a2
-	istore _t10
-	iload _t10
-	invokevirtual A.a1
-	istore _t11
-	invokevirtual A.a3
-	istore _t12
-	iload _t12
-	istore a
-	invokevirtual A.a2
-	istore _t14
-	iload _t14
-	invokevirtual A.a1
-	istore _t15
-	invokevirtual A.a2
-	istore _t16
-	iload _t16
-	invokevirtual A.a1
-	istore _t17
-	invokevirtual A.a2
-	istore _t18
-	iload _t18
-	istore i
-	iconst 2
-	invokevirtual A.a1
-	istore _t19
-	invokevirtual A.a3
-	istore _t20
-	iload _t20
-	istore a
-	iload THIS
-	iload ia
-	iload i
-	iconst false
-	invokevirtual A.a5
-	istore _t21
-	iload _t21
-	istore i
-	iload _t22
-	ireturn
-	stop
-A.a5:
-	istore a
-	istore b
-	istore c
-	istore d
-	iconst 1
-	ireturn
-	stop
+		iffalse goto block_6
+		goto block_5
+	block_5:
+		iload sum
+		print
+		goto block_7
+	block_7:
+		iload sum
+		iload num
+		iadd
+		istore _t6
+		iload _t6
+		istore sum
+		iload num
+		iconst 1
+		isub
+		istore _t7
+		iload _t7
+		istore num
+		goto block_2
+	block_6:
+		iload num
+		print
+		goto block_7
+	block_4:
+		iload sum
+		ireturn
+		stop

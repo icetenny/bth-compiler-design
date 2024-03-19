@@ -1,96 +1,64 @@
 digraph {
  graph [ splines = ortho ]
 node [ shape = box ];
-n0 [label="block_0 : SemanticValidMethodCall.main
+n0 [label="block_0 : C2.main
 --------------
 store a
-_t0 := new A 
-_t1 := call A.a2 1
+_t0 := new Sum 
+param $100
+_t1 := call Sum.calcSum 1
 PRINT _t1
 STOP 
 "];
-n1 [label="block_1 : A.a1
+n1 [label="block_1 : Sum.calcSum
 --------------
 store num
-_t2 := num < $1
-IFFALSE _t2 GOTO block_3
+sum = $0
 GOTO block_2
 "];
 n1 -> n2 [xlabel= "true"];
-n1 -> n3 [xlabel= "false"];
 n2 [label="block_2
 --------------
-num_aux = $1
-GOTO block_4
+_t2 := $0 < num
+IFFALSE _t2 GOTO block_4
+GOTO block_3
 "];
-n2 -> n4 [xlabel= "true"];
+n2 -> n3 [xlabel= "true"];
+n2 -> n4 [xlabel= "false"];
 n3 [label="block_3
 --------------
-_t3 := call A.a3 1
-_t4 := call A.a2 1
-_t5 := num * _t4
-num_aux = _t5
-GOTO block_4
+_t3 := $50 < num
+_t4 := sum < $2000
+_t5 := _t3 AND _t4
+IFFALSE _t5 GOTO block_6
+GOTO block_5
 "];
-n3 -> n4 [xlabel= "true"];
+n3 -> n5 [xlabel= "true"];
+n3 -> n6 [xlabel= "false"];
 n4 [label="block_4
 --------------
-RETURN THIS
+RETURN sum
 STOP 
 "];
-n5 [label="block_5 : A.a2
+n5 [label="block_5
 --------------
-RETURN $0
-STOP 
+PRINT sum
+GOTO block_7
 "];
-n6 [label="block_6 : A.a3
+n5 -> n7 [xlabel= "true"];
+n6 [label="block_6
 --------------
-_t6 := new A 
-a = _t6
-RETURN a
-STOP 
+PRINT num
+GOTO block_7
 "];
-n7 [label="block_7 : A.a4
+n6 -> n7 [xlabel= "true"];
+n7 [label="block_7
 --------------
-_t7 := new A 
-_t8 := call A.a2 1
-param _t8
-_t9 := call A.a1 2
-_t10 := call A.a2 1
-param _t10
-_t11 := call A.a1 2
-_t12 := call A.a3 1
-a = _t12
-_t13 := new A 
-_t14 := call A.a2 1
-param _t14
-_t15 := call A.a1 2
-_t16 := call A.a2 1
-param _t16
-_t17 := call A.a1 2
-_t18 := call A.a2 1
-i = _t18
-param $2
-_t19 := call A.a1 2
-_t20 := call A.a3 1
-a = _t20
-param THIS
-param ia
-param i
-param FALSE
-_t21 := call A.a5 5
-i = _t21
-_t22 := new A 
-RETURN _t22
-STOP 
+_t6 := sum + num
+sum = _t6
+_t7 := num - $1
+num = _t7
+GOTO block_2
 "];
-n8 [label="block_8 : A.a5
---------------
-store a
-store b
-store c
-store d
-RETURN $1
-STOP 
-"];
+n7 -> n2 [xlabel= "true"];
 }

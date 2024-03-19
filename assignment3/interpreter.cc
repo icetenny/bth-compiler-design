@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 
     if (argc == 1)
     {
-        filename = "bytecode.class"; //Default filename
+        filename = "bytecode.class"; // Default filename
     }
     else if (argc == 2)
     {
@@ -23,11 +23,10 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-
     StackMachine SM;
     SM.init(filename);
 
-    cout << "Executing..." << endl;
+    // cout << "Executing..." << endl;
     SM.execute();
 
     return 0;
